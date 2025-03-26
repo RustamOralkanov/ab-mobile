@@ -1,7 +1,8 @@
 import { CustomInput } from "@/shared/ui";
 import { useState } from "react";
 import { Button, Form, Spinner, YStack, SizableText } from "tamagui";
-import { usePostCheckPhoneMutation } from "../api";
+import { usePostLoginMutation } from "../api";
+import { useApiError } from "@/shared/hooks/useApiError";
 
 const formatPhoneNumber = (value: string) => {
     let cleaned = value.replace(/\D/g, "").slice(1);
@@ -15,9 +16,13 @@ const formatPhoneNumber = (value: string) => {
 
 const AuthForm = () => {
     const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
     const [phoneError, setPhoneError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
     const [status, setStatus] = useState<"off" | "submitting" | "submitted">("off");
-    const [postCheckPhone] = usePostCheckPhoneMutation();
+    const [postLogin] = usePostLoginMutation();
+
+    const { handleError } = useApiError();
 
     const handlePhoneChange = (value: string) => {
         const formatted = formatPhoneNumber(value);
@@ -26,17 +31,17 @@ const AuthForm = () => {
 
     const onSubmit = async () => {
         if (phone.length !== 18) {
-            setPhoneError("Неверный номер телефона!");
+            setPhoneError("Заполните номер телефона!");
             return;
         }
 
         setStatus("submitting");
         try {
-            const response = await postCheckPhone({ phone: phone.replace(/[\s\-\(\)]/g, "") }).unwrap();
+            const response = await postLogin({ phone: phone.replace(/[\s\-\(\)]/g, ""), password: password }).unwrap();
             console.log(response, "response");
             setStatus("submitted");
         } catch (error) {
-            setPhoneError("Произошла ошибка, попробуйте позже!");
+            setPasswordError(handleError(error));
             setStatus("off");
         }
     };
@@ -49,14 +54,30 @@ const AuthForm = () => {
                     placeholder={`Номер телефона`}
                     keyboardType="numeric"
                     value={phone}
+                    textContentType="telephoneNumber"
                     onChangeText={(value) => {
                         setPhoneError("");
                         handlePhoneChange(value);
                     }}
                 />
-                <SizableText fontSize={12} color={"#EF4444"}>
-                    {phoneError}
-                </SizableText>
+                {phoneError && (
+                    <SizableText fontSize={12} color={"#EF4444"}>
+                        {phoneError}
+                    </SizableText>
+                )}
+                <CustomInput
+                    id="password"
+                    value={password}
+                    placeholder={`Пароль *`}
+                    onChangeText={(value) => setPassword(value)}
+                    textContentType="password"
+                    secureTextEntry={true}
+                />
+                {passwordError && (
+                    <SizableText fontSize={12} color={"#EF4444"}>
+                        {passwordError}
+                    </SizableText>
+                )}
             </YStack>
             <YStack gap={24}>
                 <Form.Trigger asChild>

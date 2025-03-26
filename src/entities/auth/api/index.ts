@@ -14,7 +14,16 @@ export const authApi = createApi({
                 };
             },
         }),
+        postLogin: builder.mutation({
+            query: (body) => {
+                return {
+                    url: `/auth/login`,
+                    method: "POST",
+                    body: body,
+                };
+            },
+        }),
     }),
 });
 
-export const { usePostCheckPhoneMutation } = authApi;
+export const { usePostCheckPhoneMutation, usePostLoginMutation } = authApi;

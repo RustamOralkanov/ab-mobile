@@ -18,7 +18,7 @@ const CustomInput = (props: TextInputProps) => {
                 borderLeftColor: isFocus ? "#D6ED17" : "#F5F5F5",
                 borderBlockColor: isFocus ? "#D6ED17" : "#F5F5F5",
             }}
-            placeholderTextColor={"#1D1D1D"}
+            placeholderTextColor={"#B8B8B8"}
             onFocus={handleFocus}
             onBlur={handleBlur}
         />
