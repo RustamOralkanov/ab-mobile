@@ -1,3 +1,4 @@
+import React from "react";
 import { useRouter } from "expo-router";
 import { AnimatePresence, MotiView, View } from "moti";
 import { YStack, Image, Button, SizableText } from "tamagui";
@@ -10,7 +11,7 @@ const WelcomePage = () => {
     };
 
     return (
-        <YStack flex={1} justify={"space-between"} items={"center"} bg={"#D6ED17"}>
+        <YStack flex={1} justify={"space-between"} items={"center"} bg={"#D6ED17"} px={20}>
             <AnimatePresence>
                 <View
                     from={{
@@ -74,7 +75,7 @@ const WelcomePage = () => {
                     <SizableText>Тілді таңдаңыз / Выберите язык</SizableText>
                     <YStack gap={12} width={"100%"}>
                         <Button size={"$3"} onPress={navigateToAuth}>
-                            Қазақша
+                            <SizableText>Қазақша</SizableText>
                         </Button>
                         <Button size={"$3"} onPress={navigateToAuth}>
                             Русский

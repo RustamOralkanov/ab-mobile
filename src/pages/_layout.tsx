@@ -31,7 +31,6 @@ export default function RootLayout() {
                                 headerShown: false,
                                 contentStyle: {
                                     backgroundColor: "#D6ED17",
-                                    paddingHorizontal: 20,
                                 },
                             }}
                         />
@@ -39,10 +38,9 @@ export default function RootLayout() {
                             name="(auth)"
                             options={{
                                 headerShown: false,
-                                contentStyle: { backgroundColor: "#ffffff", paddingHorizontal: 20 },
+                                contentStyle: { backgroundColor: "#ffffff" },
                             }}
                         />
-                        {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
                     </Stack>
                 </TamaguiProvider>
             </Provider>
